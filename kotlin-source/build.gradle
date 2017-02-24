@@ -61,7 +61,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         cordapps = []
     }
     node {
-        name "NodeA"
+        name "Clinic A"
         nearestCity "London"
         advertisedServices = []
         artemisPort 10004
@@ -69,17 +69,17 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         cordapps = []
         rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
     }
+//    node {
+//        name "Regulator"
+//        nearestCity "New York"
+//        advertisedServices = []
+//        artemisPort 10006
+//        webPort 10007
+//        cordapps = []
+//        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
+//    }
     node {
-        name "NodeB"
-        nearestCity "New York"
-        advertisedServices = []
-        artemisPort 10006
-        webPort 10007
-        cordapps = []
-        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
-    }
-    node {
-        name "NodeC"
+        name "AIA"
         nearestCity "San Francisco"
         advertisedServices = []
         artemisPort 10008
@@ -120,6 +120,6 @@ publishing {
 
 task runTemplateClientRPC(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    main = 'com.template.client.TemplateClientRPCKt'
+    main = 'com.clinicalclaims.client.TemplateClientRPCKt'
     args 'localhost:10004'
 }
