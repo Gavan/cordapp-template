@@ -38,15 +38,22 @@ To get started, clone this repository with:
 And change directories to the newly cloned repo:
 
      cd cordapp-template
+
+### Releases
+
+It is recommended to checkout a milestone release of Corda. To do this you must run: 
+
+    git checkout -b release-M9.2
+
+### Snapshots
+
+**Warning**: Snapshots are very unstable, it is recommended to use a milestone instead.
+
+When building from the latest SNAPSHOT release you must also clone the master
+branch of the [corda repository](https://github.com/corda/corda) and then run `gradlew install`
+to build the dependencies required for this template.
 ​     
 ##Building the CorDapp template:
-
-**NOTE: Building the CorDapp Template WILL fail without 
-first running `/gradlew install` (or `gradlew.bat install`) from the master 
-branch of the [corda repository](https://github.com/corda/corda). 
-This template will receive a stable release as part of milestone 9, 
-at which point you'll be able to build the template without running this 
-install step.**
 
 **Unix:** 
 
@@ -56,21 +63,21 @@ install step.**
 
      gradlew.bat deployNodes
 
-Note: You'll need to re-run this build step after making any changes to 
+Note: You'll need to re-run this build step after making any changes to
 the template for these to take effect on the node.
 
 ## Running the Nodes
 
-Once the build finishes, change directories to the folder where the newly 
+Once the build finishes, change directories to the folder where the newly
 built nodes are located:
 
 **Kotlin:**
 
-     cd kotlin/build/nodes
+     cd kotlin-source/build/nodes
 
 **Java:**
 
-     cd java/build/nodes
+     cd java-source/build/nodes
 
 The Gradle build script will have created a folder for each node. You'll
 see three folders, one for each node and a `runnodes` script. You can
@@ -136,7 +143,7 @@ client.
 
 Run the following gradle task:
 
-     ./gradlew runExampleClientRPC
+     ./gradlew runTemplateClientRPC
 
 ## Running the Nodes Across Multiple Machines
 

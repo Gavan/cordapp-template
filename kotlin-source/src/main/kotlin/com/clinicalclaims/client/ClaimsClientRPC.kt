@@ -25,7 +25,7 @@ private class TemplateClientRPC {
     fun main(args: Array<String>) {
         require(args.size == 1) { "Usage: TemplateClientRPC <node address>" }
         val nodeAddress = HostAndPort.fromString(args[0])
-        val client = CordaRPCClient(nodeAddress, configureTestSSL())
+        val client = CordaRPCClient(nodeAddress, configureTestSSL(), null)
 
         // Can be amended in the com.clinicalclaims.MainKt file.
         client.start("user1", "test")

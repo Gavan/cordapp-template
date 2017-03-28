@@ -9,9 +9,8 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-    maven {
-        url 'https://dl.bintray.com/kotlin/exposed'
-    }
+    maven { url 'https://dl.bintray.com/kotlin/exposed' }
+    maven { url 'https://jitpack.io' }
 }
 
 sourceSets {
@@ -36,8 +35,11 @@ dependencies {
     compile "net.corda:core:$corda_version"
     compile "net.corda:finance:$corda_version"
     compile "net.corda:node:$corda_version"
-    compile "net.corda:test-utils:$corda_version"
+    compile "net.corda:webserver:$corda_version"
     runtime "net.corda:corda:$corda_version"
+    runtime "net.corda:corda-webserver:$corda_version"
+
+    testCompile "net.corda:test-utils:$corda_version"
 
     // GraphStream: For visualisation (required by TemplateClientRPC app)
     compile "org.graphstream:gs-core:1.3"
@@ -67,7 +69,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         artemisPort 10004
         webPort 10005
         cordapps = []
-        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
+        rpcUsers = [[user: "user1", "password": "test", "permissions": []]]
     }
     node {
         name "Sheung Wan Health Clinic"
@@ -76,7 +78,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         artemisPort 10006
         webPort 10007
         cordapps = []
-        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
+        rpcUsers = [[user: "user1", "password": "test", "permissions": []]]
     }
     node {
         name "AIA"
@@ -85,7 +87,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         artemisPort 10008
         webPort 10009
         cordapps = []
-        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
+        rpcUsers = [[user: "user1", "password": "test", "permissions": []]]
     }
 }
 

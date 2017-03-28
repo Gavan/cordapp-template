@@ -4,30 +4,39 @@ import com.esotericsoftware.kryo.Kryo;
 import com.clinicalclaims.api.TemplateApi;
 import com.clinicalclaims.flow.TemplateFlow;
 import com.clinicalclaims.service.TemplateService;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.template.api.TemplateApi;
+import com.template.flow.TemplateFlow;
+import com.template.service.TemplateService;
 import net.corda.core.messaging.CordaRPCOps;
 import net.corda.core.node.CordaPluginRegistry;
 import net.corda.core.node.PluginServiceHub;
+import net.corda.core.serialization.SerializationCustomization;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 public class TemplatePlugin extends CordaPluginRegistry {
     /**
      * A list of classes that expose web APIs.
      */
-    private final List<Function<CordaRPCOps, ?>> webApis = Collections.singletonList(TemplateApi::new);
+    private final List<Function<CordaRPCOps, ?>> webApis = ImmutableList.of(TemplateApi::new);
 
     /**
      * A list of flows required for this CorDapp.
      */
-    private final Map<String, Set<String>> requiredFlows = Collections.singletonMap(
+    private final Map<String, Set<String>> requiredFlows = ImmutableMap.of(
             TemplateFlow.Initiator.class.getName(),
-            new HashSet<>(Collections.emptyList()));
+            ImmutableSet.of());
 
     /**
      * A list of long-lived services to be hosted within the node.
      */
-    private final List<Function<PluginServiceHub, ?>> servicePlugins = Collections.singletonList(TemplateService::new);
+    private final List<Function<PluginServiceHub, ?>> servicePlugins = ImmutableList.of(TemplateService::new);
 
     /**
      * A list of directories in the resources directory that will be served by Jetty under /web.
@@ -39,9 +48,10 @@ public class TemplatePlugin extends CordaPluginRegistry {
     );
 
     /**
-     * Registering the required types with Kryo, Corda's serialisation framework.
+     * Whitelisting the required types for serialisation by the Corda node.
      */
-    @Override public boolean registerRPCKryoTypes(Kryo kryo) {
+    @Override
+    public boolean customizeSerialization(SerializationCustomization custom) {
         return true;
     }
 
