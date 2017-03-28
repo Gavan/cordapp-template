@@ -25,7 +25,7 @@ open class ClaimContract : Contract {
      */
     override fun verify(tx: TransactionForContract) {
         //group states by everything except status
-        val groups = tx.groupStates(ClaimState::withoutStatus)
+        val groups = tx.groupStates(ClaimState::linearId)
         val command = tx.commands.requireSingleCommand<Commands>()
 
         for ((inputs, outputs, key) in groups) {

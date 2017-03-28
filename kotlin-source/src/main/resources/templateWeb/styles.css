@@ -1,0 +1,161 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: auto; }
+
+* {
+  box-sizing: border-box; }
+
+p, h1, h2, h3, h4, h5 {
+  margin: 0;
+  padding: 0; }
+
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 5; }
+  .loading img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+
+.nav-tabs > li > a {
+  font-size: 1.3em; }
+
+.claim-buttons-row {
+  margin: 1em 0 0.1em;
+  text-align: center;
+  font-size: 1.4em; }
+  .claim-buttons-row .approve-button {
+    background: #66CC99;
+    border-radius: 8px;
+    cursor: pointer; }
+  .claim-buttons-row .reject-button {
+    background: #FF9999;
+    border-radius: 8px;
+    cursor: pointer; }
+
+.claim-row {
+  margin: 1em auto; }
+  .claim-row .approved-claim {
+    background: #66CC99; }
+  .claim-row .rejected-claim {
+    background: #FF9999; }
+  .claim-row .claim {
+    border: 1px solid #ccc;
+    padding-bottom: 1em; }
+    .claim-row .claim .claim-header {
+      font-size: 1.5em;
+      border-bottom: 1px solid #000;
+      margin-bottom: 0.5em;
+      padding: 0.5em 0; }
+      .claim-row .claim .claim-header .claim-status-value {
+        font-size: 0.9em;
+        font-style: italic; }
+    .claim-row .claim .claim-status {
+      text-align: right; }
+    .claim-row .claim .claim-field-row {
+      font-size: 1.1em;
+      margin-bottom: 0.3em; }
+      .claim-row .claim .claim-field-row .field-label {
+        text-align: left; }
+      .claim-row .claim .claim-field-row .field-value {
+        text-align: left;
+        font-size: 1.1em; }
+
+.title {
+  text-align: center;
+  font-size: 40pt;
+  color: white;
+  background-color: crimson;
+  border-radius: 5px;
+  width: 100%;
+  height: 80px; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 2px solid crimson;
+  margin: 1em auto;
+  padding: 0; }
+
+.form select {
+  width: 100%;
+  height: 34px; }
+
+.field-row {
+  margin-bottom: 0.7em; }
+
+.field-label {
+  font-size: 1.1em;
+  font-weight: 700;
+  text-align: right; }
+
+.claim-info .field-label {
+  text-align: right; }
+.claim-info .field-value {
+  text-align: right; }
+
+.personal-info {
+  margin-top: 1em; }
+
+.submit {
+  width: 100%;
+  text-align: center;
+  background-color: crimson;
+  color: white;
+  padding: 6px 10px;
+  margin-right: 1em;
+  border-radius: 8px;
+  cursor: pointer; }
+
+.form {
+  font-size: 1.2em;
+  margin-top: 1em; }
+
+.firstname {
+  width: 200px;
+  height: 35px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14pt; }
+
+.lastname {
+  width: 200px;
+  height: 35px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14pt; }
+
+.id {
+  width: 200px;
+  height: 35px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14pt;
+  margin: 0 26pt; }
+
+.diagnosis {
+  width: 200px;
+  height: 35px;
+  font-size: 14pt;
+  text-align: center; }
+
+.symtoms {
+  width: 200px;
+  height: 35px;
+  font-size: 14pt;
+  text-align: center; }
+
+.amount {
+  width: 200px;
+  height: 35px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14pt; }
+
+/*# sourceMappingURL=styles.css.map */

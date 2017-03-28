@@ -3,7 +3,7 @@ package com.clinicalclaims.plugin
 import com.esotericsoftware.kryo.Kryo
 import com.clinicalclaims.api.ClaimApi
 import com.clinicalclaims.contract.ClaimContract
-import com.clinicalclaims.flow.CreateClaimFlow
+import com.clinicalclaims.flow.*
 import com.clinicalclaims.model.Claim
 import com.clinicalclaims.service.ClaimService
 import com.clinicalclaims.state.ClaimState
@@ -28,7 +28,9 @@ class ClaimPlugin : CordaPluginRegistry() {
      * A list of flows required for this CorDapp.
      */
     override val requiredFlows: Map<String, Set<String>> = mapOf(
-            CreateClaimFlow.Initiator::class.java.name to setOf(ClaimState::class.java.name, Party::class.java.name)
+            CreateClaimFlow.Initiator::class.java.name to setOf(ClaimState::class.java.name, Party::class.java.name),
+            ApproveClaimFlow.Initiator::class.java.name to setOf(),
+            RejectClaimFlow.Initiator::class.java.name to setOf()
     )
 
     /**
@@ -51,11 +53,17 @@ class ClaimPlugin : CordaPluginRegistry() {
     override fun registerRPCKryoTypes(kryo: Kryo): Boolean {
         kryo.register(ClaimState::class.java)
         kryo.register(ClaimContract::class.java)
+        kryo.register(ApproveClaimFlowResult.Failure::class.java);
+        kryo.register(ApproveClaimFlowResult.Success::class.java);
+        kryo.register(RejectClaimFlowResult.Failure::class.java);
+        kryo.register(RejectClaimFlowResult.Success::class.java);
         kryo.register(Claim::class.java)
         kryo.register(TransactionVerificationException.ContractRejection::class.java)
         kryo.register(LedgerTransaction::class.java)
         kryo.register(AuthenticatedObject::class.java)
         kryo.register(ClaimContract.Commands.Create::class.java)
+        kryo.register(ClaimContract.Commands.Approve::class.java)
+        kryo.register(ClaimContract.Commands.Reject::class.java)
         kryo.register(Timestamp::class.java)
         kryo.register(TransactionType.General::class.java)
         return true

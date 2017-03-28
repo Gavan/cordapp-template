@@ -1,8 +1,10 @@
 package com.clinicalclaims.api
 
 import com.clinicalclaims.contract.ClaimContract
+import com.clinicalclaims.flow.ApproveClaimFlow
+import com.clinicalclaims.flow.RejectClaimFlow
 import com.clinicalclaims.model.Claim
-import com.clinicalclaims.flow.CreateClaimFlow.Initiator
+import com.clinicalclaims.flow.CreateClaimFlow
 import com.clinicalclaims.state.ClaimState
 import net.corda.core.getOrThrow
 import net.corda.core.messaging.CordaRPCOps
@@ -80,11 +82,64 @@ class ClaimApi(val services: CordaRPCOps) {
         val (status, msg) = try {
             // The line below blocks and waits for the future to resolve.
             val result = services
-                    .startFlow(::Initiator, state, otherParty)
+                    .startFlow(CreateClaimFlow::Initiator, state, otherParty)
                     .returnValue
                     .getOrThrow()
 
             Response.Status.CREATED to "Transaction id ${result.id} committed to ledger."
+
+        } catch (ex: Throwable) {
+            logger.error(ex.message, ex)
+            Response.Status.BAD_REQUEST to "Transaction failed."
+        }
+
+        return Response.status(status).entity(msg).build()
+    }
+
+    /**
+     * Initiates a flow to submit a clinical claim.
+     *
+     * Once the flow finishes it will have written the claim to ledger. Both the sender and the recipient will be able to
+     * see it when calling /api/clinicalClaims/claims on their respective nodes.
+     *
+     * This end-point takes a Party name parameter as part of the path. If the serving node can't find the other party
+     * in its network map cache, it will return an HTTP bad request.
+     *
+     * The flow is invoked asynchronously. It returns a future when the flow's call() method returns.
+     */
+    @POST
+    @Path("approve-claim")
+    fun approveClaim(@FormParam("claimId") claimId: String): Response {
+
+        val (status, msg) = try {
+            // The line below blocks and waits for the future to resolve.
+            val result = services
+                    .startFlow(ApproveClaimFlow::Initiator, claimId)
+                    .returnValue
+                    .getOrThrow()
+
+            Response.Status.CREATED to "Transaction id ${result} committed to ledger."
+
+        } catch (ex: Throwable) {
+            logger.error(ex.message, ex)
+            Response.Status.BAD_REQUEST to "Transaction failed."
+        }
+
+        return Response.status(status).entity(msg).build()
+    }
+
+    @POST
+    @Path("reject-claim")
+    fun rejectClaim(@FormParam("claimId") claimId: String): Response {
+
+        val (status, msg) = try {
+            // The line below blocks and waits for the future to resolve.
+            val result = services
+                    .startFlow(RejectClaimFlow::Initiator, claimId)
+                    .returnValue
+                    .getOrThrow()
+
+            Response.Status.CREATED to "Transaction id ${result} committed to ledger."
 
         } catch (ex: Throwable) {
             logger.error(ex.message, ex)

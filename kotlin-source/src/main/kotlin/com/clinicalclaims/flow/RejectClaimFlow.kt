@@ -22,7 +22,7 @@ import net.corda.core.utilities.unwrap
  * This flow allows for an insurance company [Initiator] to approve a currently pending claim and notify the [Reciever]
  * of the updated claim status
  */
-object ApproveClaimFlow {
+object RejectClaimFlow {
 
     class Initiator(val claimId: String) : FlowLogic<SignedTransaction>(){
 
@@ -70,11 +70,11 @@ object ApproveClaimFlow {
 //                    return ApproveClaimFlowResult.Failure("Claim Not Found")
 
                 val oldState = serviceHub.vaultService.linearHeadsOfType<ClaimState>().values.elementAt(idx)
-                val newState = oldState.state.data.approveClaim()
+                val newState = oldState.state.data.rejectClaim()
 
                 // Stage 1.
                 progressTracker.currentStep = GENERATING_TRANSACTION
-                val txCommand = Command(ClaimContract.Commands.Approve(), oldState.state.data.participants)
+                val txCommand = Command(ClaimContract.Commands.Reject(), oldState.state.data.participants)
                 val unsignedTx = TransactionType.General.Builder(notary).withItems(oldState, txCommand,newState)
 
                 // Stage 2.
@@ -97,7 +97,7 @@ object ApproveClaimFlow {
 
     }
 
-    class Acceptor(val otherParty : Party) : FlowLogic<ApproveClaimFlowResult>(){
+    class Acceptor(val otherParty : Party) : FlowLogic<RejectClaimFlowResult>(){
 
         /**
          * The progress tracker checkpoints each stage of the flow and outputs the specified messages when each
@@ -123,7 +123,7 @@ object ApproveClaimFlow {
          * Define the initiator's flow logic here.
          */
         @Suspendable
-        override fun call() : ApproveClaimFlowResult {
+        override fun call() : RejectClaimFlowResult {
 
             try {
                 // Prep.
@@ -163,11 +163,11 @@ object ApproveClaimFlow {
                 progressTracker.currentStep = FINALISING_TRANSACTION
                 // FinalityFlow() notarises the transaction and records it in each party's vault.
                 subFlow(FinalityFlow(signedTx, setOf(serviceHub.myInfo.legalIdentity, otherParty)))
-                return ApproveClaimFlowResult.Success("Transaction id ${signedTx.id} committed to ledger.")
+                return RejectClaimFlowResult.Success("Transaction id ${signedTx.id} committed to ledger.")
 
             }
             catch (ex : Exception){
-                return ApproveClaimFlowResult.Failure(ex.message)
+                return RejectClaimFlowResult.Failure(ex.message)
             }
         }
 
@@ -177,12 +177,12 @@ object ApproveClaimFlow {
 /**
 * Helper class for returning a result from the flows.
 */
-sealed class ApproveClaimFlowResult {
-    class Success(val message: String?) : ApproveClaimFlowResult() {
+sealed class RejectClaimFlowResult {
+    class Success(val message: String?) : RejectClaimFlowResult() {
         override fun toString(): String = "Success($message)"
     }
 
-    class Failure(val message: String?) : ApproveClaimFlowResult() {
+    class Failure(val message: String?) : RejectClaimFlowResult() {
         override fun toString(): String = "Failure($message)"
     }
 }

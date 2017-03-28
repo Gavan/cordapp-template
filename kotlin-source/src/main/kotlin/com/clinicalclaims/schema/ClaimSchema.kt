@@ -10,6 +10,7 @@ import javax.persistence.Table
  * Created by Gavan on 10/2/2017.
  * Database schema for a claim
  *
+ * @param claimId the claim ID
  * @param customerId the customer ID
  * @param policyId the policy ID
  * @param clinicId the clinic ID
@@ -29,6 +30,9 @@ object ClaimSchemaV1 : MappedSchema(
     @Entity
     @Table(name = "claim_states")
     class PersistentClaim(
+            @Column(name = "claimId")
+            var claimId : String,
+
             @Column(name = "customerId")
             var customerId : String,
 

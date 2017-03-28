@@ -47,6 +47,10 @@ COMING WEEKS WE'LL WRITE A TUTORIAL ON HOW BEST TO DO THIS.
                 </select>
             </div>
             <div class="form-group">
+                <label for="claimId" class="control-label">Claim ID(String):</label>
+                <input type="text" ng-model="modalInstance.form.claimId" class="form-control" id="claimId">
+            </div>
+            <div class="form-group">
                 <label for="customerId" class="control-label">Customer ID (String):</label>
                 <input type="text" ng-model="modalInstance.form.customerId" class="form-control" id="customerId">
             </div>
@@ -113,6 +117,7 @@ COMING WEEKS WE'LL WRITE A TUTORIAL ON HOW BEST TO DO THIS.
                 <ul>
                     <li>Clinic: {{claim.clinic}}</li>
                     <li>Insurer: {{claim.insurer}}</li>
+                    <li>Claim ID: {{claim.claim.claimId}}</li>
                     <li>Customer ID: {{claim.claim.customerId}}</li>
                     <li>Policy ID: {{claim.claim.policyId}}</li>
                     <li>Clinic ID: {{claim.claim.clinicId}}</li>

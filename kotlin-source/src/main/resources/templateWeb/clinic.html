@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>Clinic Template</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+	<div class="loading" style="display:none;">
+		<img src="loading.svg">
+	</div>
+	<!-- <li>Clinic: {{claim.clinic}}</li>
+                    <li>Insurer: {{claim.insurer}}</li>
+                    <li>Claim ID: {{claim.claim.claimId}}</li>
+                    <li>Customer ID: {{claim.claim.customerId}}</li>
+                    <li>Policy ID: {{claim.claim.policyId}}</li>
+                    <li>Clinic ID: {{claim.claim.clinicId}}</li>
+                    <li>Customer First Name: {{claim.claim.firstName}}</li>
+                    <li>Customer Last Name: {{claim.claim.lastName}}</li>
+                    <li>Ailment: {{claim.claim.ailment}}</li>
+                    <li>Cost: {{claim.claim.cost}}</li>
+                    <li>Status: {{claim.status}}</li> -->
+    <div class="main container-fluid">
+		<div class="row"><p class="title">Clinic Name</p></div>	
+
+		<ul class="nav nav-tabs" id="Tabs">
+		  <li class="active"><a data-target="#new-claim" data-toggle="tab">New Claim</a></li>
+		  <li><a data-target="#pending-claims" data-toggle="tab">Pending Claims</a></li>
+		  <li><a data-target="#approved-claims" data-toggle="tab">Approved Claims</a></li>
+		  <li><a data-target="#rejected-claims" data-toggle="tab">Rejected Claims</a></li>
+		</ul>
+
+		<div class="tab-content">
+			  <div class="tab-pane active" id="new-claim">
+					<div class="form row container-fluid">
+					
+					    <div class="claim-info">
+					    	<div class="row">
+					    		<p class="field-label col-xs-2 col-xs-offset-7">Claim #:</p>
+					    		<p class="field-value claim-value col-xs-3"></p>
+					    	</div>
+					    	
+					    	<div class="row">
+					    		<p class="field-label col-xs-2 col-xs-offset-7">Clinic :</p>
+					    		<p class="field-value clinic-value col-xs-3"></p>
+					    	</div>
+
+					    	<div class="row" style="display:none">
+					    		<p class="field-label col-xs-2 col-xs-offset-7">Doctor :</p>
+					    		<p class="field-value doctor-value col-xs-3">David Chan</p>
+					    	</div>
+
+					    	<div class="row">
+					    		<p class="field-label col-xs-2 col-xs-offset-7">Insurer :</p>
+					    		<p class="field-value insurer-value col-xs-3">AIA</p>
+					    	</div>
+					    </div>
+
+					    <div class="personal-info">
+					    	<div class="row field-row">
+					    		<p class="field-label col-xs-3 ">Policy #:</p>
+					    		<div class="col-xs-3">
+					    			<input type="text" class="form-control policy" name="policy" value="" id="policy">
+					    		</div>
+					    	</div>
+
+					    	<div class="row field-row">
+					    		<p class="field-label col-xs-3 ">Patient First Name :</p>
+					    		<div class="col-xs-3">
+					    			<input type="text" class="form-control first-name" name="first-name" value="" id="first-name">
+					    		</div>
+					    	</div>
+
+					    	<div class="row field-row">
+					    		<p class="field-label col-xs-3 ">Patient Last Name :</p>
+					    		<div class="col-xs-3">
+					    			<input type="text" class="form-control last-name" name="last-name" value="" id="last-name">
+					    		</div>
+					    	</div>
+					    </div>
+
+					    <div class="row field-row">
+				    		<p class="field-label col-xs-3">Ailment :</p>
+				    		<div class="col-xs-3">
+				    			<select class="selectpicker ailment" id="ailment">
+								  <option>Allergies</option>
+								  <option>Common Cold</option>
+								  <option>Ear Infection</option>
+								  <option>Flu</option>
+								</select>
+
+				    		</div>
+				    	</div>
+					
+					<hr/> 
+
+					    <div class="row field-row">
+				    		<p class="field-label col-xs-3 col-xs-offset-6">Cost (HKD) :</p>
+				    		<div class="col-xs-3">
+				    			<input type="number" class="form-control cost" name="cost" value="" id="cost">
+				    		</div>
+				    	</div>
+					    
+
+						<div class="row">
+							<div class="col-xs-2 col-xs-offset-10">
+								<p class="submit" id="submit" name="submit"> Submit</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="pending-claims">
+					
+					<div class="claims-list container-fluid pending-claims-list">
+						<!-- Claims will be listed here -->
+					</div>
+
+			  	</div>
+
+			  	<div class="tab-pane" id="approved-claims">
+					
+					<div class="claims-list container-fluid approved-claims-list">
+						<!-- Claims will be listed here -->
+					</div>
+					
+			  	</div>
+
+			  	<div class="tab-pane" id="rejected-claims">
+					
+					<div class="claims-list container-fluid rejected-claims-list">
+						<!-- Claims will be listed here -->
+					</div>
+					
+			  	</div>
+			</div>
+	</div>
+</body>
+</html>
+
+
+

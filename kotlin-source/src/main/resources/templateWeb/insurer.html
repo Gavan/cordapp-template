@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Insurer Template</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+	<!-- <li>Clinic: {{claim.clinic}}</li>
+                    <li>Insurer: {{claim.insurer}}</li>
+                    <li>Claim ID: {{claim.claim.claimId}}</li>
+                    <li>Customer ID: {{claim.claim.customerId}}</li>
+                    <li>Policy ID: {{claim.claim.policyId}}</li>
+                    <li>Clinic ID: {{claim.claim.clinicId}}</li>
+                    <li>Customer First Name: {{claim.claim.firstName}}</li>
+                    <li>Customer Last Name: {{claim.claim.lastName}}</li>
+                    <li>Ailment: {{claim.claim.ailment}}</li>
+                    <li>Cost: {{claim.claim.cost}}</li>
+                    <li>Status: {{claim.status}}</li> -->
+    <div class="main container-fluid">
+		<div class="row"><p class="title">Clinic Name</p></div>	
+
+		<ul class="nav nav-tabs" id="Tabs">
+		  <li class="active"><a data-target="#pending-claims" data-toggle="tab">Pending Claims</a></li>
+		  <li><a data-target="#approved-claims" data-toggle="tab">Approved Claims</a></li>
+		  <li><a data-target="#rejected-claims" data-toggle="tab">Rejected Claims</a></li>
+		</ul>
+
+		<div class="tab-content">
+				<div class="tab-pane active" id="pending-claims">
+					
+					<div class="claims-list container-fluid pending-claims-list">
+						<!-- Claims will be listed here -->
+					</div>
+
+			  	</div>
+
+			  	<div class="tab-pane" id="approved-claims">
+					
+					<div class="claims-list container-fluid approved-claims-list">
+						<!-- Claims will be listed here -->
+					</div>
+					
+			  	</div>
+
+			  	<div class="tab-pane" id="rejected-claims">
+					
+					<div class="claims-list container-fluid rejected-claims-list">
+						<!-- Claims will be listed here -->
+					</div>
+					
+			  	</div>
+			</div>
+	</div>
+</body>
+
+</html>
+
+
+

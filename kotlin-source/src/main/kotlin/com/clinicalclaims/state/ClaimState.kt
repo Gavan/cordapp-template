@@ -41,6 +41,7 @@ data class ClaimState(val claim : Claim,
     override fun generateMappedObject(schema: MappedSchema): PersistentState {
         return when (schema) {
             is ClaimSchemaV1 -> ClaimSchemaV1.PersistentClaim(
+                    claimId = this.claim.claimId,
                     customerId = this.claim.customerId,
                     policyId = this.claim.policyId,
                     clinicId = this.claim.clinicId,
@@ -55,6 +56,8 @@ data class ClaimState(val claim : Claim,
     }
 
     fun withoutStatus() = copy(status = "")
+    fun approveClaim() = copy(status = "Approved")
+    fun rejectClaim() = copy(status = "Rejected")
 
     override fun supportedSchemas() : Iterable<MappedSchema> = listOf(ClaimSchemaV1)
 }

@@ -72,6 +72,7 @@ app.controller('ModalInstanceCtrl', function ($http, $location, $uibModalInstanc
             modalInstance.formError = false;
 
             const claim = {
+                claimId: modalInstance.form.claimId,
                 customerId: modalInstance.form.customerId,
                 policyId: modalInstance.form.policyId,
                 clinicId: modalInstance.form.clinicId,

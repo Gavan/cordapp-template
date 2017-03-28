@@ -61,7 +61,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         cordapps = []
     }
     node {
-        name "Clinic A"
+        name "Central Health Clinic"
         nearestCity "London"
         advertisedServices = []
         artemisPort 10004
@@ -69,15 +69,15 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
         cordapps = []
         rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
     }
-//    node {
-//        name "Regulator"
-//        nearestCity "New York"
-//        advertisedServices = []
-//        artemisPort 10006
-//        webPort 10007
-//        cordapps = []
-//        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
-//    }
+    node {
+        name "Sheung Wan Health Clinic"
+        nearestCity "New York"
+        advertisedServices = []
+        artemisPort 10006
+        webPort 10007
+        cordapps = []
+        rpcUsers = [[ user: "user1", "password": "test", "permissions": []]]
+    }
     node {
         name "AIA"
         nearestCity "San Francisco"

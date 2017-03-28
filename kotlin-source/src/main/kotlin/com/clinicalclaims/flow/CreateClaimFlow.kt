@@ -9,6 +9,7 @@ import net.corda.core.crypto.Party
 import net.corda.core.crypto.composite
 import net.corda.core.crypto.signWithECDSA
 import net.corda.core.flows.FlowLogic
+import net.corda.core.node.services.linearHeadsOfType
 import net.corda.core.transactions.SignedTransaction
 import net.corda.core.utilities.ProgressTracker
 import net.corda.flows.FinalityFlow

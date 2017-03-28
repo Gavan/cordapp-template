@@ -15,7 +15,8 @@ package com.clinicalclaims.model
  * @param ailment the ailment the customer has been diagnosed with
  * @param cost  the cost of the claim in cents
  */
-data class Claim (val customerId : String,
+data class Claim (val claimId : String,
+                  val customerId : String,
                   val policyId : String,
                   val clinicId : String,
                   val firstName : String,
