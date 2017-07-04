@@ -2,6 +2,7 @@ package com.clinicalclaims.service
 
 import com.clinicalclaims.flow.ApproveClaimFlow
 import com.clinicalclaims.flow.CreateClaimFlow
+import com.clinicalclaims.flow.ProcessClaimFlow
 import com.clinicalclaims.flow.RejectClaimFlow
 import net.corda.core.node.PluginServiceHub
 
@@ -26,6 +27,9 @@ object ClaimService {
             }
             services.registerFlowInitiator(RejectClaimFlow.Initiator::class){
                 RejectClaimFlow.Acceptor(it)
+            }
+            services.registerFlowInitiator(ProcessClaimFlow.Initiator::class){
+                ProcessClaimFlow.Acceptor(it)
             }
         }
     }

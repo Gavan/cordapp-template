@@ -1,2 +1,3 @@
 # Register a ServiceLoader service extending from net.corda.node.CordaPluginRegistry
 com.clinicalclaims.plugin.ClaimPlugin
+com.clinicalclaims.oracle.PolicyOracle$Plugin

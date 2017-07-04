@@ -11,6 +11,7 @@ import net.corda.core.crypto.Party
 import net.corda.core.schemas.MappedSchema
 import net.corda.core.schemas.PersistentState
 import net.corda.core.schemas.QueryableState
+import net.corda.core.serialization.CordaSerializable
 import java.security.PublicKey
 
 /**
@@ -23,6 +24,7 @@ import java.security.PublicKey
  * @param recipient the party receiving and approving the claim.
  * @param contract the contract which governs which transactions are valid for this state object.
  */
+@CordaSerializable
 data class ClaimState(val claim : Claim,
                  val clinic : Party,
                  val insurer : Party,
@@ -44,6 +46,7 @@ data class ClaimState(val claim : Claim,
                     claimId = this.claim.claimId,
                     customerId = this.claim.customerId,
                     policyId = this.claim.policyId,
+                    secondaryPolicyId = this.claim.secondaryPolicyId,
                     clinicId = this.claim.clinicId,
                     firstName = this.claim.firstName,
                     lastName = this.claim.lastName,

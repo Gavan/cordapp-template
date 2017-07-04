@@ -7,14 +7,15 @@ import com.clinicalclaims.service.TemplateService;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.template.api.TemplateApi;
-import com.template.flow.TemplateFlow;
-import com.template.service.TemplateService;
+import com.clinicalclaims.api.TemplateApi;
+import com.clinicalclaims.flow.TemplateFlow;
+import com.clinicalclaims.service.TemplateService;
 import net.corda.core.messaging.CordaRPCOps;
 import net.corda.core.node.CordaPluginRegistry;
 import net.corda.core.node.PluginServiceHub;
 import net.corda.core.serialization.SerializationCustomization;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

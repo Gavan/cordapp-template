@@ -46,6 +46,9 @@ dependencies {
     compile("org.graphstream:gs-ui:1.3") {
         exclude group: "bouncycastle"
     }
+    
+    //HTTP request Library
+    compile "com.github.jkcclemens:khttp:-SNAPSHOT"
 
     // CorDapp dependencies
     // Specify your cordapp's dependencies below, including dependent cordapps
@@ -57,10 +60,11 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['build']) {
     node {
         name "Controller"
         nearestCity "London"
-        advertisedServices = ["corda.notary.validating"]
+        advertisedServices = ["corda.notary.validating", "corda.policy_oracle"]
         artemisPort 10002
         webPort 10003
         cordapps = []
+        useTestClock true
     }
     node {
         name "Central Health Clinic"

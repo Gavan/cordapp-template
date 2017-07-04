@@ -37,6 +37,10 @@ p, h1, h2, h3, h4, h5 {
     background: #FF9999;
     border-radius: 8px;
     cursor: pointer; }
+  .claim-buttons-row .process-button {
+      background: #2ecc71;
+      border-radius: 8px;
+      cursor: pointer; }
 
 .claim-row {
   margin: 1em auto; }

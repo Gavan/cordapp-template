@@ -13,6 +13,7 @@ import javax.persistence.Table
  * @param claimId the claim ID
  * @param customerId the customer ID
  * @param policyId the policy ID
+ * @param secondaryPolicyId the secondary policy ID
  * @param clinicId the clinic ID
  * @param firstName the customer's first name
  * @param lastName the customer's last name
@@ -38,6 +39,9 @@ object ClaimSchemaV1 : MappedSchema(
 
             @Column(name = "policyId")
             var policyId : String,
+
+            @Column(name = "secondaryPolicyId")
+            var secondaryPolicyId : String,
 
             @Column(name = "clinicId")
             var clinicId : String,

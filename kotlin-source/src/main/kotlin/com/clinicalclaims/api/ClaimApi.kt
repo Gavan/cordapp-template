@@ -96,17 +96,6 @@ class ClaimApi(val services: CordaRPCOps) {
         return Response.status(status).entity(msg).build()
     }
 
-    /**
-     * Initiates a flow to submit a clinical claim.
-     *
-     * Once the flow finishes it will have written the claim to ledger. Both the sender and the recipient will be able to
-     * see it when calling /api/clinicalClaims/claims on their respective nodes.
-     *
-     * This end-point takes a Party name parameter as part of the path. If the serving node can't find the other party
-     * in its network map cache, it will return an HTTP bad request.
-     *
-     * The flow is invoked asynchronously. It returns a future when the flow's call() method returns.
-     */
     @POST
     @Path("approve-claim")
     fun approveClaim(@FormParam("claimId") claimId: String): Response {

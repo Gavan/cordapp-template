@@ -5,6 +5,7 @@ import com.clinicalclaims.state.ClaimState
 import net.corda.core.contracts.*
 import net.corda.core.contracts.Requirements.by
 import net.corda.core.crypto.SecureHash
+import net.corda.core.serialization.CordaSerializable
 
 /**
  * A implementation of a basic smart contract in Corda.
@@ -18,6 +19,7 @@ import net.corda.core.crypto.SecureHash
  *
  * All contracts must sub-class the [Contract] interface.
  */
+@CordaSerializable
 open class ClaimContract : Contract {
     /**
      * The verify() function of all the states' contracts must not throw an exception for a transaction to be
@@ -89,8 +91,11 @@ open class ClaimContract : Contract {
      * This contract only implements one command, Create.
      */
     interface Commands : CommandData {
+        @CordaSerializable
         class Create : TypeOnlyCommandData(), Commands
+        @CordaSerializable
         class Approve : TypeOnlyCommandData(), Commands
+        @CordaSerializable
         class Reject : TypeOnlyCommandData(), Commands
     }
 

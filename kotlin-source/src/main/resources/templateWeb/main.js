@@ -1,5 +1,7 @@
 var nodePort;
 var apiBaseUrl;
+var policyApiBaseURL = "http://localhost:4040/api/policies/"
+var approveClaimApi = "http://localhost:4040/api/claims/"
 var me;
 var claimId = "C" + Math.floor(Math.random() * 100000) + 1 ;
 $(document).ready(function(){
@@ -32,15 +34,28 @@ $(document).ready(function(){
 
 //helper function to add a project to Browse Projects table
 function addClaimRow(claim) {
+    console.log("CLAIM")
+    console.log(claim)
+    console.log(claim.claim.secondaryPolicyId != 0)
+    secondaryPolicy = ""
+    if (claim.claim.secondaryPolicyId != 0) {
+        secondaryPolicy = '<div class="claim-field-row row">\
+                            <div class="col-xs-3 col-xs-offset-3">\
+                                <p class="field-label">Secondary Policy #:</p>\
+                            </div>\
+                            <div class="col-xs-3">\
+                                <p class="field-value">' +
+                                    claim.claim.secondaryPolicyId +
+                                '</p>\
+                            </div>\
+                        </div>'
+    }
 	if (claim.status =="Pending") {
 		var container = "pending-claim";
 		var list = ".pending-claims-list";
 		var buttons = '<div class="claim-buttons-row row">\
-							<div class="col-xs-3 col-xs-offset-2">\
-								<p class="reject-button" onClick="rejectClaim(\''+claim.claim.claimId+'\')">Reject</p>\
-							</div>\
-							<div class="col-xs-3 col-xs-offset-2">\
-								<p class="approve-button" onClick="approveClaim(\''+claim.claim.claimId+'\')">Approve</p>\
+							<div class="col-xs-4 col-xs-offset-4">\
+								<p class="process-button" onClick="processClaim(\''+claim.claim.policyId+'\',\''+claim.claim.secondaryPolicyId+'\',\''+claim.claim.claimId+'\','+claim.claim.cost+')">Process</p>\
 							</div>\
 						</div>';
 	}
@@ -101,8 +116,9 @@ function addClaimRow(claim) {
 										claim.claim.policyId +
 									'</p>\
 								</div>\
-							</div>\
-							<div class="claim-field-row row">\
+							</div>'
+							+ secondaryPolicy +
+							'<div class="claim-field-row row">\
 								<div class="col-xs-3 col-xs-offset-3">\
 									<p class="field-label">Patient Name:</p>\
 								</div>\
@@ -147,11 +163,15 @@ function submitClaim(){
 	claim.claimId = claimId//placeholder;
 	claim.customerId = Math.floor(Math.random() * 100000) + 1; //placeholder
 	claim.policyId = $('#policy').val();
+	claim.secondaryPolicyId = $('#secondary-policy').val();
 	claim.clinicId = 3829 //placeholder;
 	claim.firstName = $('#first-name').val();
-	claim.lastName = $('#last-name').val();;
-	claim.ailment = $('#ailment').val();;
-	claim.cost = $('#cost').val();;
+	claim.lastName = $('#last-name').val();
+	claim.ailment = $('#ailment').val();
+	claim.cost = $('#cost').val();
+
+	if (claim.secondaryPolicyId.length <= 0)
+	    claim.secondaryPolicyId = 0
 
 	console.log(claim);
 	$.ajax({
@@ -163,7 +183,7 @@ function submitClaim(){
 	     //...
 	     hideLoading();
 	     alert(response);
-	     getClaims();
+	     window.location.reload();
 	   },
 	   error: function(response){
 	    hideLoading()
@@ -181,6 +201,69 @@ function hideLoading() {
 	$('.loading').hide();
 }
 
+//NEEDS TO BE FIXED TO BE ATOMIC
+function processClaim(policyId, secondaryPolicyId, claimId, claimAmount){
+    //get policy info
+    $.get(policyApiBaseURL + policyId, function(policy){
+        console.log(policy)
+
+        //if no policy found
+        if (policy.result == false){
+            rejectClaim(claimId)
+            alert("Claim Rejected: Invalid Policy")
+            return
+        }
+
+        //if policy1 coverage is enough
+        var policy1RemainingCoverage = policy.coverageAmount - policy.coverageUsed
+        if (policy1RemainingCoverage >= claimAmount) {
+            approveClaim(claimId)
+            approveClaimOracle(claimId, policyId, claimAmount)
+            alert("Claim Approved")
+            return
+        }
+
+        //if no second policy
+        if (secondaryPolicyId == 0){
+            rejectClaim(claimId)
+            alert("Claim Rejected: Insufficient Coverage Remaining")
+            return
+        }
+
+        //get second policy details
+         $.get(policyApiBaseURL + secondaryPolicyId, function(secondaryPolicy){
+            console.log(secondaryPolicy)
+
+            //if no secondary policy found
+            if (secondaryPolicy.result == false){
+                rejectClaim(claimId)
+                alert("Claim Rejected: Invalid Secondary Policy")
+                return
+            }
+
+            var policy2RemainingCoverage = secondaryPolicy.coverageAmount - secondaryPolicy.coverageUsed
+
+            //if claim amount is greater than total remaning coverage
+            if (claimAmount > policy1RemainingCoverage + policy2RemainingCoverage) {
+                rejectClaim(claimId)
+                alert("Claim Rejected: Insufficient Coverage Remaining")
+                return
+            }
+
+            //calculate value of coverage to be used from secondary policy
+            var policy1Cost = policy1RemainingCoverage
+            var policy2Cost = claimAmount - policy1RemainingCoverage
+
+            //approve claim
+            approveClaim(claimId)
+            approveClaimOracle(claimId, policyId, policy1Cost)
+            approveClaimOracle(claimId, secondaryPolicyId, policy2Cost)
+            alert("Claim Approved")
+         })
+    })
+
+}
+
 function approveClaim(claimId) {
 	var endpoint = "approve-claim";
 	console.log(claimId);
@@ -188,6 +271,12 @@ function approveClaim(claimId) {
 		console.log(response)
 		getClaims()
 	})
+}
+
+function approveClaimOracle(claimId, policyId, cost) {
+    $.post(approveClaimApi, {claimId : claimId, policyId : policyId, cost: cost}, function(response){
+    	    console.log(response)
+    	})
 }
 
 function rejectClaim(claimId) {

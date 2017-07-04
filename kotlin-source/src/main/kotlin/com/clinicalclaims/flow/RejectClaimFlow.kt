@@ -11,6 +11,7 @@ import net.corda.core.crypto.Party
 import net.corda.core.crypto.composite
 import net.corda.core.crypto.signWithECDSA
 import net.corda.core.node.services.linearHeadsOfType
+import net.corda.core.serialization.CordaSerializable
 import net.corda.core.utilities.ProgressTracker
 import net.corda.flows.FinalityFlow
 import net.corda.core.utilities.unwrap
@@ -60,7 +61,6 @@ object RejectClaimFlow {
                 val notary = serviceHub.networkMapCache.notaryNodes.single().notaryIdentity
 
                 //Obtain a reference to the state in our vault
-                val claims = serviceHub.vaultService.currentVault.statesOfType<ClaimState>()
                 val idx = serviceHub.vaultService.linearHeadsOfType<ClaimState>().values.indexOfFirst{
                     it.state.data.claim.claimId == claimId
                 }
@@ -178,10 +178,11 @@ object RejectClaimFlow {
 * Helper class for returning a result from the flows.
 */
 sealed class RejectClaimFlowResult {
+    @CordaSerializable
     class Success(val message: String?) : RejectClaimFlowResult() {
         override fun toString(): String = "Success($message)"
     }
-
+    @CordaSerializable
     class Failure(val message: String?) : RejectClaimFlowResult() {
         override fun toString(): String = "Failure($message)"
     }

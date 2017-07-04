@@ -1,5 +1,7 @@
 package com.clinicalclaims.model
 
+import net.corda.core.serialization.CordaSerializable
+
 /**
  * A simple class representing an claim.
  *
@@ -9,15 +11,18 @@ package com.clinicalclaims.model
  *
  * @param customerId the customer ID
  * @param policyId the policy ID
+ * @param secondaryPolicyId the secondary policy ID
  * @param clinicId the clinic ID
  * @param firstName the customer's first name
  * @param lastName the customer's last name
  * @param ailment the ailment the customer has been diagnosed with
  * @param cost  the cost of the claim in cents
  */
+@CordaSerializable
 data class Claim (val claimId : String,
                   val customerId : String,
                   val policyId : String,
+                  val secondaryPolicyId : String,
                   val clinicId : String,
                   val firstName : String,
                   val lastName : String,
